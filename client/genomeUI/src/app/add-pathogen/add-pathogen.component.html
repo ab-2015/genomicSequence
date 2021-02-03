@@ -1,0 +1,67 @@
+<div>
+    <h1 class="formheader"></h1>
+    <div style="background-color:#FDD;" class="formcontainer">
+        <form  class="clr-form clr-form-compact">
+            <div class="clr-form-control row"></div>
+            <label class="formheader">Add a new Pathogen </label>
+            
+            <div class="clr-form-control row">
+                <span class="clr-col-4 label label-info">Common Name</span>
+                <div class="clr-col-11 clr-input-wrapper">
+                    <input class="clr-input"  type="text" id="cn" name="cn"  [(ngModel)]="newPathogen.commonName">
+                </div>
+            </div>
+            <div class="clr-form-control row">
+                <span class="clr-col-4 label label-info">Scientific Name</span>
+                <div class="clr-col-11 clr-input-wrapper">
+                    <input class="clr-input" type="text" id="sn" name="sn"  [(ngModel)]="newPathogen.scientificName">
+                </div>
+            </div>
+            <div class="clr-form-control row">
+                <span class="clr-col-4 label label-info">Pathogen Family</span>
+                <div class="clr-col-11 clr-input-wrapper">
+                    <input class="clr-input"  type="text" id="pf" name="pf" [(ngModel)]="newPathogen.family">
+                </div>
+            </div>
+            <div class="clr-form-control row">
+                <span class="clr-col-4 label label-info">Clinical Symptoms</span>
+                <div class="clr-col-11 clr-input-wrapper">
+                    <input class="clr-input" type="text" id="cs" name="cs"  [(ngModel)]="newPathogen.clinicalSymptoms">
+                </div>
+            </div>
+            <div class="clr-form-control row">
+                <span class="clr-col-4 label label-info">Viral Factors</span>
+                <div class="clr-col-11 clr-input-wrapper">
+                    <input class="clr-input"  type="text" id="vf" name="vf"  [(ngModel)]="newPathogen.viralFactor">
+                </div>
+            </div>
+            <div class="clr-form-control row">
+                <span class="clr-col-4 label label-info">Annotation Tags</span>
+                <div class="clr-col-11 clr-input-wrapper">
+                    <input class="clr-input"  type="text" id="at" name="at" [(ngModel)]="newPathogen.annotation">
+                </div>
+            </div>
+            <div class="clr-form-control row">
+                <span class="clr-col-4 label label-info">Genome Sequence</span>
+                <div class="clr-col-11 clr-file-wrapper">
+                    <input type="file"  
+                    (change)="importGenomeSequence($event)" 
+                    placeholder="Upload file" 
+                    single
+                    accept=".txt" 
+                    name="genomesequence" 
+                    id="genomesequence" 
+                    required>
+                </div>
+            </div>
+            <div class="clr-form-control row">
+                <div class="clr-col-3"></div>
+                <div class="clr-col-6">
+                    <button class="btn btn-primary btn-sm" (click)="cancel()">cancel</button>
+                    <button class="btn btn-sm btn-success" (click)="save()">Save</button>
+                </div>
+                <div class="clr-col-3"></div>
+            </div>
+        </form>
+    </div>
+</div>

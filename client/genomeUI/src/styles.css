@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+.formcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.formheader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:x-large;
+}

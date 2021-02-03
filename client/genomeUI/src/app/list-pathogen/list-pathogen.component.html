@@ -1,0 +1,124 @@
+<div style="background-color:#DDF;" class="formcontainer" [hidden]="showDetail">
+    <form class="clr-form clr-form-compact">
+        <div class="clr-form-control row"></div>
+        <h1 class="formheader">Search For Pathogens </h1>
+        <div class="clr-form-control row">
+            <div class="clr-col-12 clr-input-wrapper">
+                <span class="clr-col-6 label label-info">Common Name</span>
+                <input class="clr-input" style="width:100%;" type="text" id="cn" name="cn" [(ngModel)]="currentPathogen.commonName">
+                <button class="btn btn-primary btn-link" (click)="search(1, currentPathogen.commonName)">Search</button>
+            </div>
+        </div>
+        <div class="clr-form-control row">
+            <div class="clr-col-12 clr-input-wrapper">
+                <span class="clr-col-6 label label-info">Genome Sequence</span>
+                <input class="clr-input" style="width:100%;" type="text" id="sn" name="sn" [(ngModel)]="currentPathogen.genomeSequence">
+                <button class="btn btn-primary btn-link" (click)="search(2, currentPathogen.genomeSequence)">Search</button>
+            </div>
+        </div>
+        <div class="clr-form-control row"></div>
+    </form>
+</div>
+
+<div [hidden]="showDetail">
+    <h1 class="formheader"> Pathogens </h1>
+    <clr-datagrid class="gridborder compact">
+        <clr-dg-column>Common Name</clr-dg-column>
+        <clr-dg-column>Scientific Name</clr-dg-column>
+        <clr-dg-column [clrDgSortBy]="pfComparator">Pathogen Family</clr-dg-column>
+        <clr-dg-column [clrDgSortBy]="pfComparator">clinicalSymptoms
+            <clr-dg-string-filter [clrDgStringFilter]="clinicalSymptomsFilter"></clr-dg-string-filter>
+        </clr-dg-column>
+        <clr-dg-column>viralFactor</clr-dg-column>
+        <clr-dg-column>Genome Sequence</clr-dg-column>
+        <clr-dg-column>Annotation Tags</clr-dg-column>
+        <clr-dg-column>
+            <button class="btn btn-success btn-sm" (click)="add()">New </button>
+            <button class="btn  btn-link" (click)="reset()">Reload all</button>
+        </clr-dg-column>
+    
+        <clr-dg-row *clrDgItems="let pathogen of pathogens">
+            <clr-dg-cell>{{pathogen.commonName}}</clr-dg-cell>
+            <clr-dg-cell>{{pathogen.scientificName}}</clr-dg-cell>
+            <clr-dg-cell >{{pathogen.family}}</clr-dg-cell>
+            <clr-dg-cell>{{pathogen.clinicalSymptoms}}</clr-dg-cell>
+            <clr-dg-cell>{{pathogen.viralFactor}}</clr-dg-cell>
+            <clr-dg-cell>{{getPlaceholderSequence(pathogen)}}</clr-dg-cell>
+            <clr-dg-cell>{{pathogen.annotation}}</clr-dg-cell>
+            
+            <clr-dg-cell><button class="btn btn-primary btn-sm" (click)="showDetails(pathogen)">Details</button></clr-dg-cell>
+        </clr-dg-row>
+        <clr-dg-footer>
+            <clr-dg-pagination #pagination [clrDgPageSize]="3">
+                <clr-dg-page-size [clrPageSizeOptions]="[3,6,18,100]">Pathogen defintions per page</clr-dg-page-size>
+                {{pathogens.length}} pathogens found.
+            </clr-dg-pagination>
+        </clr-dg-footer>
+    </clr-datagrid>
+  
+</div>
+
+<div  [hidden]="!showDetail">
+    <h1 class="formheader"></h1>
+    <div class="formcontainer">
+        <form clrLayout="horizontal" class="clr-form clr-form-compact">
+        <div class="clr-form-control row"></div>
+        <label class="formheader">View/Edit Details of Pathogen </label>
+        <div class="clr-form-control row"></div>
+        <div class="clr-form-control row">
+            <span class="clr-col-6 label label-info">Common Name</span>
+            <div class="clr-col-12 clr-input-wrapper">
+                <input class="clr-input" style="width:100%;" type="text" id="cn" name="cn" size="15" [(ngModel)]="currentPathogen.commonName">
+            </div>
+        </div>
+        <div class="clr-form-control row">
+            <span class="clr-col-6 label label-info">Scientific Name</span>
+            <div class="clr-col-12 clr-input-wrapper">
+                <input class="clr-input" style="width:100%;" type="text" id="sn" name="sn" [(ngModel)]="currentPathogen.scientificName">
+            </div>
+        </div>
+        <div class="clr-form-control row">
+            <span class="clr-col-6 label label-info">Pathogen Family</span>
+            <div class="clr-col-12 clr-input-wrapper">
+                <input class="clr-input" style="width:100%;" type="text" id="pf" name="pf"  [(ngModel)]="currentPathogen.family">
+            </div>
+        </div>
+        <div class="clr-form-control row">
+            <span class="clr-col-6 label label-info">Clinical Symptoms</span>
+            <div class="clr-col-12 clr-input-wrapper">
+                <input class="clr-input" style="width:100%;" type="text" id="cs" name="cs"  [(ngModel)]="currentPathogen.clinicalSymptoms">
+            </div>
+        </div>
+        <div class="clr-form-control row">
+            <span class="clr-col-6 label label-info">Viral Factors</span>
+            <div class="clr-col-12 clr-input-wrapper">
+                <input class="clr-input" style="width:100%;" type="text" id="vf" name="vf"  [(ngModel)]="currentPathogen.viralFactor">
+            </div>
+        </div>
+        <div class="clr-form-control row">
+            <span class="clr-col-6 label label-info">Annotation Tags</span>
+            <div class="clr-col-12 clr-input-wrapper">
+                <input class="clr-input" style="width:100%;" type="text" id="at" name="at"  [(ngModel)]="currentPathogen.annotation">
+            </div>
+        </div>
+        <div class="clr-form-control row">
+            <span class="clr-col-6 label label-info">Genome Sequence</span>
+            <div class="clr-col-12 clr-textarea-wrapper">
+                <textarea style="width:100%;" type="text" id="gs" name="gs" rows="10" [ngModel]="currentPathogen.genomeSequence"></textarea>
+            </div>
+        </div>
+        <div class="clr-form-control row">
+            <div class="clr-col-4"></div>
+            <div class="clr-col-4 clr-input-wrapper">
+                <button class="btn btn-primary btn-sm" (click)="reset()">Cancel</button>
+                <button class="btn btn-success btn-sm" (click)="save()">Save</button>
+            </div>
+            <div class="clr-col-4"></div>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+    
+
